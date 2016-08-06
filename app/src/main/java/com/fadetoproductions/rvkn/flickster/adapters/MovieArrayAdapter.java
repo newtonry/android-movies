@@ -15,10 +15,18 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
+
 /**
  * Created by rnewton on 8/3/16.
  */
 public class MovieArrayAdapter extends ArrayAdapter<Movie> {
+
+    int GOOD_MOVIE_RATING = 6;
+
+    public enum MovieItemType {
+        AVERAGE, GOOD
+    }
 
     private static class ViewHolder {
         TextView tvTitle;
@@ -26,9 +34,28 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
         ImageView ivImage;
     }
 
-
     public MovieArrayAdapter(Context context, List<Movie> movies) {
         super(context, android.R.layout.simple_list_item_1, movies);
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        double voteAverage = getItem(position).getVoteAverage();
+        if (voteAverage > GOOD_MOVIE_RATING) {
+            return MovieItemType.GOOD.ordinal();
+        }
+        return MovieItemType.AVERAGE.ordinal();
+    }
+
+    @Override public int getViewTypeCount() {
+        return MovieItemType.values().length;
+    }
+
+    private View getInflatedLayoutForType(int type) {
+        if (type == MovieItemType.AVERAGE.ordinal()) {
+            return LayoutInflater.from(getContext()).inflate(R.layout.item_movie, null);
+        }
+        return LayoutInflater.from(getContext()).inflate(R.layout.popular_movie_item, null);
     }
 
     @Override
@@ -39,8 +66,8 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
         if (convertView == null) {
             viewHolder = new ViewHolder();
 
-            LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(R.layout.item_movie, parent, false);
+            int type = getItemViewType(position);
+            convertView = getInflatedLayoutForType(type);
 
             viewHolder.tvTitle = (TextView) convertView.findViewById(R.id.tvTitle);
             viewHolder.tvOverview = (TextView) convertView.findViewById(R.id.tvOverview);
@@ -56,8 +83,9 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
         String imageUrl = selectImageBasedOnOrientation(movie);
         Picasso.with(getContext())
                 .load(imageUrl)
+                .placeholder(R.drawable.movie_icon_2)
+                .transform(new RoundedCornersTransformation(10, 10))
                 .into(viewHolder.ivImage);
-
         return convertView;
     }
 
