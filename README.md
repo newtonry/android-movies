@@ -6,7 +6,7 @@ This is the ToDo app described here: http://courses.codepath.com/snippets/intro_
 
 #### Required
 - [x] User can view a list of movies (title, poster image, and overview) currently playing in theaters from the Movie Database API.
-- [ ] Lists should be fully optimized for performance with the ViewHolder pattern.
+- [x] Lists should be fully optimized for performance with the ViewHolder pattern.
 - [ ] Views should be responsive for both landscape/portrait mode.
 	- In portrait mode, the poster image, title, and movie overview is shown.
 	- In landscape mode, the rotated layout should use the backdrop image instead and show the title and movie overview to the right of it.
