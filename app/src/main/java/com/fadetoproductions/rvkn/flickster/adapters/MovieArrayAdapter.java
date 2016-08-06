@@ -40,11 +40,8 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
 
     @Override
     public int getItemViewType(int position) {
-        double voteAverage = getItem(position).getVoteAverage();
-        if (voteAverage > GOOD_MOVIE_RATING) {
-            return MovieItemType.GOOD.ordinal();
-        }
-        return MovieItemType.AVERAGE.ordinal();
+        Movie movie = getItem(position);
+        return movie.isHighlyRated() ? MovieItemType.GOOD.ordinal() : MovieItemType.AVERAGE.ordinal();
     }
 
     @Override public int getViewTypeCount() {
@@ -81,11 +78,20 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
         viewHolder.tvTitle.setText(movie.getOriginalTitle());
         viewHolder.tvOverview.setText(movie.getOverview());
         String imageUrl = selectImageBasedOnOrientation(movie);
-        Picasso.with(getContext())
-                .load(imageUrl)
-                .placeholder(R.drawable.movie_icon_2)
-                .transform(new RoundedCornersTransformation(10, 10))
-                .into(viewHolder.ivImage);
+
+        if (movie.isHighlyRated()) {
+            Picasso.with(getContext())
+                    .load(imageUrl)
+                    .placeholder(R.drawable.movie_icon_2)
+                    .into(viewHolder.ivImage);
+        } else {
+            Picasso.with(getContext())
+                    .load(imageUrl)
+                    .placeholder(R.drawable.movie_icon_2)
+                    .transform(new RoundedCornersTransformation(10, 10))
+                    .into(viewHolder.ivImage);
+        }
+
         return convertView;
     }
 

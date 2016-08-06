@@ -11,8 +11,10 @@ import java.util.ArrayList;
  */
 public class Movie  {
 
+    int GOOD_MOVIE_RATING = 6;
+
     public String getBackdropPath() {
-        return String.format("https://image.tmdb.org/t/p/w342/%s", backdropPath);
+        return String.format("https://image.tmdb.org/t/p/w684/%s", backdropPath);
     }
 
     public String getPosterPath() {
@@ -25,10 +27,6 @@ public class Movie  {
 
     public String getOverview() {
         return overview;
-    }
-
-    public double getVoteAverage() {
-        return voteAverage;
     }
 
 
@@ -45,6 +43,12 @@ public class Movie  {
         this.overview = jsonObject.getString("overview");
         this.voteAverage = jsonObject.getDouble("vote_average");
     }
+
+    public Boolean isHighlyRated() {
+        return voteAverage > GOOD_MOVIE_RATING;
+
+    }
+
 
     public static ArrayList<Movie> fromJSONArray(JSONArray jsonArray) {
         ArrayList<Movie> movies = new ArrayList<>();
