@@ -1,6 +1,7 @@
 package com.fadetoproductions.rvkn.flickster.adapters;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +43,7 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
             convertView = inflater.inflate(R.layout.item_movie, parent, false);
 
             viewHolder.tvTitle = (TextView) convertView.findViewById(R.id.tvTitle);
-            viewHolder.tvOverview = (TextView) (TextView) convertView.findViewById(R.id.tvOverview);
+            viewHolder.tvOverview = (TextView) convertView.findViewById(R.id.tvOverview);
             viewHolder.ivImage = (ImageView) convertView.findViewById(R.id.ivMovieImage);
 
             convertView.setTag(viewHolder);
@@ -52,10 +53,18 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
 
         viewHolder.tvTitle.setText(movie.getOriginalTitle());
         viewHolder.tvOverview.setText(movie.getOverview());
-        Picasso.with(getContext()).load(movie.getPosterPath()).into(viewHolder.ivImage);
+        String imageUrl = selectImageBasedOnOrientation(movie);
+        Picasso.with(getContext())
+                .load(imageUrl)
+                .into(viewHolder.ivImage);
 
         return convertView;
+    }
 
+    private String selectImageBasedOnOrientation(Movie movie) {
+        int orientation = getContext().getResources().getConfiguration().orientation;
+        String imageUrl = (orientation == Configuration.ORIENTATION_PORTRAIT) ? movie.getPosterPath() : movie.getBackdropPath();
+        return imageUrl;
     }
 
 }
