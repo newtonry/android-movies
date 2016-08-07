@@ -4,6 +4,8 @@ This is the ToDo app described here: http://courses.codepath.com/snippets/intro_
 
 ### Features
 
+Hrs spent: 15?
+
 #### Required
 - [x] User can view a list of movies (title, poster image, and overview) currently playing in theaters from the Movie Database API.
 - [x] Lists should be fully optimized for performance with the ViewHolder pattern.
