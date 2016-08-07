@@ -30,6 +30,7 @@
         android:layout_toEndOf="@+id/ivMovieImage"
         app:layout_widthPercent="75%"
         android:textColor="@android:color/white"
+        android:padding="10dp"
         />
 
     <TextView
@@ -42,5 +43,6 @@
         android:layout_toEndOf="@+id/ivMovieImage"
         app:layout_widthPercent="75%"
         android:textColor="@android:color/white"
+        android:padding="10dp"
         />
 </android.support.percent.PercentRelativeLayout>

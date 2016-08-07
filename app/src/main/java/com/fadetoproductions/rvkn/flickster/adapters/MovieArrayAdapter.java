@@ -80,12 +80,12 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
         if (movie.isHighlyRated()) {
             Picasso.with(getContext())
                     .load(imageUrl)
-                    .placeholder(R.drawable.movie_icon_2)
+                    .placeholder(R.drawable.camera)
                     .into(viewHolder.ivImage);
         } else {
             Picasso.with(getContext())
                     .load(imageUrl)
-                    .placeholder(R.drawable.movie_icon_2)
+                    .placeholder(R.drawable.camera)
 //                    .transform(new RoundedCornersTransformation(10, 10))
                     .into(viewHolder.ivImage);
         }
