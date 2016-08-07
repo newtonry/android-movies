@@ -28,4 +28,4 @@ This is the ToDo app described here: http://courses.codepath.com/snippets/intro_
 - [ ] Stretch: Apply the popular ButterKnife annotation library to reduce view boilerplate. (1 point)
 - [x] Stretch: Add a rounded corners for the images using the Picasso transformations. (1 point). I removed it b/c it fit my style without it
 
-![Video Walkthrough](something.gif)
+![Video Walkthrough](flicks-1.gif)

@@ -18,13 +18,11 @@ import java.util.ArrayList;
 import cz.msebera.android.httpclient.Header;
 
 public class MovieActivity extends AppCompatActivity {
+
     private SwipeRefreshLayout swipeContainer;
-
-
     ArrayList<Movie> movies;
     MovieArrayAdapter movieAdapter;
     ListView lvItems;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,11 +41,7 @@ public class MovieActivity extends AppCompatActivity {
                 fetchAndSetMovies();
             }
         });
-
         fetchAndSetMovies();
-
-
-
     }
 
     private void fetchAndSetMovies() {
@@ -83,5 +77,4 @@ public class MovieActivity extends AppCompatActivity {
 
         movieClient.fetchAllMovies();
     }
-
 }

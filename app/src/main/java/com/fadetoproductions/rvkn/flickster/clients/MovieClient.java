@@ -72,10 +72,5 @@ public class MovieClient {
                 super.onFailure(statusCode, headers, responseString, throwable);
             }
         });
-
-
-
     }
-
-
 }

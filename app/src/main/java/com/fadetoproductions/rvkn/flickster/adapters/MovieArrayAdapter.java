@@ -23,8 +23,6 @@ import java.util.List;
  */
 public class MovieArrayAdapter extends ArrayAdapter<Movie> {
 
-    int GOOD_MOVIE_RATING = 6;
-
     public enum MovieItemType {
         AVERAGE, GOOD
     }
