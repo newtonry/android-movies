@@ -37,8 +37,6 @@ public class MovieActivity extends AppCompatActivity {
         movieAdapter = new MovieArrayAdapter(this, movies);
         lvItems.setAdapter(movieAdapter);
 
-
-
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -47,6 +45,8 @@ public class MovieActivity extends AppCompatActivity {
         });
 
         fetchAndSetMovies();
+
+
 
     }
 
@@ -64,11 +64,20 @@ public class MovieActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 swipeContainer.setRefreshing(false);
-
             }
             @Override
             public void onFetchAllMoviesFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 swipeContainer.setRefreshing(false);
+            }
+
+            @Override
+            public void onFetchTrailerSuccess(int statusCode, Header[] headers, JSONObject response) {
+
+            }
+
+            @Override
+            public void onFetchTrailerFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+
             }
         });
 

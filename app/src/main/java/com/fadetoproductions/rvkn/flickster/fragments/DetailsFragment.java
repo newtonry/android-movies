@@ -1,5 +1,6 @@
 package com.fadetoproductions.rvkn.flickster.fragments;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.PorterDuff;
@@ -13,11 +14,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.fadetoproductions.rvkn.flickster.QuickPlayActivity;
 import com.fadetoproductions.rvkn.flickster.R;
+import com.fadetoproductions.rvkn.flickster.clients.MovieClient;
 import com.fadetoproductions.rvkn.flickster.models.Movie;
+import com.squareup.picasso.Picasso;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import cz.msebera.android.httpclient.Header;
+import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 
 /**
  * Created by rnewton on 8/7/16.
@@ -30,6 +42,10 @@ public class DetailsFragment extends DialogFragment {
     RatingBar rbPopularity;
     TextView tvDescription;
     TextView tvTitle;
+    ImageView ivMovieImage;
+    ImageView ivPlayTrailer;
+    String trailerSource;
+
 
     public static  DetailsFragment newInstance(Movie movie) {
         DetailsFragment fragment = new DetailsFragment();
@@ -62,6 +78,23 @@ public class DetailsFragment extends DialogFragment {
         tvTitle = (TextView) view.findViewById(R.id.tvTitle);
         tvTitle.setText(movie.getOriginalTitle());
         tvDescription.setText(movie.getOverview());
+
+        ivPlayTrailer = (ImageView) view.findViewById(R.id.ivPlayTrailer);
+        ivPlayTrailer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadTrailer();
+            }
+        });
+
+        ivMovieImage = (ImageView) view.findViewById(R.id.ivMovieImage);
+        Picasso.with(getContext())
+                .load(movie.getBackdropPath())
+                .placeholder(R.drawable.camera)
+                .transform(new RoundedCornersTransformation(10, 10))
+                .into(ivMovieImage);
+
+        setUpTrailer();
     }
 
     @Override
@@ -79,10 +112,49 @@ public class DetailsFragment extends DialogFragment {
         super.onResume();
     }
 
-
     private void setStarColors(RatingBar ratingBar) {
         LayerDrawable stars = (LayerDrawable) ratingBar.getProgressDrawable();
         stars.getDrawable(2).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);
     }
 
+    private void setUpTrailer() {
+        MovieClient movieClient = new MovieClient();
+        movieClient.setMovieClientListener(new MovieClient.MovieClientListener() {
+            @Override
+            public void onFetchAllMoviesSuccess(int statusCode, Header[] headers, JSONObject response) {
+                // Is there a way to avoid having to set all of these?
+            }
+
+            @Override
+            public void onFetchAllMoviesFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                // Is there a way to avoid having to set all of these?
+            }
+
+            @Override
+            public void onFetchTrailerSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    JSONArray youtubeVideos = response.getJSONArray("youtube");
+                    if (youtubeVideos.length() > 0) {
+                        JSONObject firstTrailer = youtubeVideos.getJSONObject(0);
+                        trailerSource = firstTrailer.getString("source");
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFetchTrailerFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+            }
+        });
+
+        movieClient.fetchTrailerForMovie(movie);
+    }
+
+    private void loadTrailer() {
+        Intent launchQuickPlayActivity = new Intent(getActivity(), QuickPlayActivity.class);
+        launchQuickPlayActivity.putExtra("source", trailerSource);
+        startActivityForResult(launchQuickPlayActivity, 100);
+    }
 }

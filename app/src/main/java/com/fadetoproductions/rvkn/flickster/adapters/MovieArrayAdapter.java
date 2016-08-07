@@ -80,18 +80,10 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
         viewHolder.tvOverview.setText(movie.getOverview());
         String imageUrl = selectImageBasedOnOrientationAndRating(movie);
 
-        if (movie.isHighlyRated()) {
-            Picasso.with(getContext())
-                    .load(imageUrl)
-                    .placeholder(R.drawable.camera)
-                    .into(viewHolder.ivImage);
-        } else {
-            Picasso.with(getContext())
-                    .load(imageUrl)
-                    .placeholder(R.drawable.camera)
-//                    .transform(new RoundedCornersTransformation(10, 10))
-                    .into(viewHolder.ivImage);
-        }
+        Picasso.with(getContext())
+                .load(imageUrl)
+                .placeholder(R.drawable.camera)
+                .into(viewHolder.ivImage);
 
 
         viewHolder.tvTitle.setOnClickListener( new View.OnClickListener() {

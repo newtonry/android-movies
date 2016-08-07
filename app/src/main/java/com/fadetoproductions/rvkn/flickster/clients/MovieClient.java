@@ -19,11 +19,13 @@ public class MovieClient {
     public interface MovieClientListener {
         void onFetchAllMoviesSuccess(int statusCode, Header[] headers, JSONObject response);
         void onFetchAllMoviesFailure(int statusCode, Header[] headers, String responseString, Throwable throwable);
+        void onFetchTrailerSuccess(int statusCode, Header[] headers, JSONObject response);
+        void onFetchTrailerFailure(int statusCode, Header[] headers, String responseString, Throwable throwable);
+
     }
 
     private MovieClientListener listener;
     private String API_KEY = "?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed";
-
 
     public MovieClient() {
         this.listener = null;
@@ -33,11 +35,9 @@ public class MovieClient {
         this.listener = listener;
     }
 
-
     public void fetchAllMovies() {
         String url = "https://api.themoviedb.org/3/movie/now_playing".concat(API_KEY);
         AsyncHttpClient client = new AsyncHttpClient();
-
 
         client.get(url, new JsonHttpResponseHandler() {
             @Override
@@ -54,6 +54,24 @@ public class MovieClient {
     }
 
     public void fetchTrailerForMovie(Movie movie) {
+        String url = "https://api.themoviedb.org/3/movie/"
+                .concat(Integer.toString(movie.getId()))
+                .concat("/trailers")
+                .concat(API_KEY);
+
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get(url, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                listener.onFetchTrailerSuccess(statusCode, headers, response);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                listener.onFetchTrailerFailure(statusCode, headers, responseString, throwable);
+                super.onFailure(statusCode, headers, responseString, throwable);
+            }
+        });
 
 
 
