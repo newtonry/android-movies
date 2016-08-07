@@ -32,6 +32,7 @@
         android:layout_toRightOf="@+id/ivMovieImage"
         android:layout_toEndOf="@+id/ivMovieImage"
         app:layout_widthPercent="30%"
+        android:textColor="@android:color/white"
         />
 
     <TextView
@@ -43,6 +44,7 @@
         android:layout_toRightOf="@+id/ivMovieImage"
         android:layout_toEndOf="@+id/ivMovieImage"
         app:layout_widthPercent="30%"
+        android:textColor="@android:color/white"
         />
 
 </android.support.percent.PercentRelativeLayout>

@@ -15,8 +15,6 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
-
 /**
  * Created by rnewton on 8/3/16.
  */
@@ -77,7 +75,7 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
 
         viewHolder.tvTitle.setText(movie.getOriginalTitle());
         viewHolder.tvOverview.setText(movie.getOverview());
-        String imageUrl = selectImageBasedOnOrientation(movie);
+        String imageUrl = selectImageBasedOnOrientationAndRating(movie);
 
         if (movie.isHighlyRated()) {
             Picasso.with(getContext())
@@ -88,17 +86,21 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
             Picasso.with(getContext())
                     .load(imageUrl)
                     .placeholder(R.drawable.movie_icon_2)
-                    .transform(new RoundedCornersTransformation(10, 10))
+//                    .transform(new RoundedCornersTransformation(10, 10))
                     .into(viewHolder.ivImage);
         }
 
         return convertView;
     }
 
-    private String selectImageBasedOnOrientation(Movie movie) {
+    private String selectImageBasedOnOrientationAndRating(Movie movie) {
+        if (movie.isHighlyRated()) {
+            // We always want the background for highly rated movies
+            return movie.getBackdropPath();
+        }
+
         int orientation = getContext().getResources().getConfiguration().orientation;
-        String imageUrl = (orientation == Configuration.ORIENTATION_PORTRAIT) ? movie.getPosterPath() : movie.getBackdropPath();
-        return imageUrl;
+        return (orientation == Configuration.ORIENTATION_PORTRAIT) ? movie.getPosterPath() : movie.getBackdropPath();
     }
 
 }

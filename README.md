@@ -16,8 +16,8 @@ This is the ToDo app described here: http://courses.codepath.com/snippets/intro_
 
 - [x] Add pull-to-refresh for popular stream with SwipeRefreshLayout (1 point)
 - [x] Display a nice default placeholder graphic for each image during loading (read more about Picasso) (1 point)
-- [ ] Improve the user interface through styling and coloring (1 to 5 points depending on the difficulty of UI improvements)
-- [ ] For popular movies (i.e. a movie voted for more than 5 stars), the full backdrop image is displayed. Otherwise, a poster image, the movie title, and overview is listed. Use Heterogenous ListViews and use different ViewHolder layout files for popular movies and less popular ones. (2 points)
+- [x] Improve the user interface through styling and coloring (1 to 5 points depending on the difficulty of UI improvements)
+- [x] For popular movies (i.e. a movie voted for more than 5 stars), the full backdrop image is displayed. Otherwise, a poster image, the movie title, and overview is listed. Use Heterogenous ListViews and use different ViewHolder layout files for popular movies and less popular ones. (2 points)
 - [ ] Stretch: Expose details of movie (ratings using RatingBar, popularity, and synopsis) in a separate activity. (3 points)
 - [ ] Stretch: Allow video posts to be played in full-screen using the YouTubePlayerView (2 points)
 - [ ] When clicking on a popular movie (i.e. a movie voted for more than 5 stars) the video should be played immediately.

@@ -29,7 +29,8 @@
         tools:text="Star Trek Beyond"
         android:id="@+id/tvTitle"
         android:layout_alignParentTop="true"
-        app:layout_widthPercent="30%"
+        android:background="#70000000"
+        android:textColor="@android:color/white"
         />
 
     <TextView
@@ -38,7 +39,8 @@
         tools:text="The USS Enterprise crew explores the furthest reaches of uncharted space, where they encounter a mysterious new enemy who puts them and everything the Federation stands for to the test."
         android:id="@+id/tvOverview"
         android:layout_below="@+id/tvTitle"
-        app:layout_widthPercent="30%"
+        android:background="#70000000"
+        android:textColor="@android:color/white"
         />
 
 </android.support.percent.PercentRelativeLayout>

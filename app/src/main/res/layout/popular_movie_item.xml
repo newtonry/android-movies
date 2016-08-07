@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<android.support.percent.PercentRelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="10dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/VerticalMovieItem"
     >
 
@@ -15,7 +16,11 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         tools:src="@mipmap/ic_launcher"
-        android:contentDescription="@string/some_image" />
+        android:contentDescription="@string/some_image"
+        android:scaleType="fitEnd"
+        android:adjustViewBounds="true"
+        app:layout_widthPercent="100%"
+        />
 
     <TextView
         android:layout_width="wrap_content"
@@ -24,9 +29,10 @@
         tools:text="Star Trek Beyond"
         android:id="@+id/tvTitle"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/ivMovieImage"
-        android:layout_toEndOf="@+id/ivMovieImage"
-        android:textColor="@android:color/holo_red_dark"
+        android:textColor="@android:color/white"
+        app:layout_widthPercent="100%"
+        android:background="#70000000"
+        android:padding="10dp"
         />
 
     <TextView
@@ -35,9 +41,12 @@
         tools:text="The USS Enterprise crew explores the furthest reaches of uncharted space, where they encounter a mysterious new enemy who puts them and everything the Federation stands for to the test."
         android:id="@+id/tvOverview"
         android:layout_below="@+id/tvTitle"
-        android:layout_toRightOf="@+id/ivMovieImage"
-        android:layout_toEndOf="@+id/ivMovieImage" />
+        android:textColor="@android:color/white"
+        app:layout_widthPercent="100%"
+        android:layout_alignBottom="@id/ivMovieImage"
+        android:background="#70000000"
+        android:padding="10dp"
+        />
 
 
-
-</RelativeLayout>
+</android.support.percent.PercentRelativeLayout>
