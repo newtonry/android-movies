@@ -10,8 +10,22 @@
 
     <style name="VerticalMovieItem">
         <item name="android:layout_height">10dp</item>
-
-
     </style>
 
+    <style name="BaseTextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="PopularTextView" parent="BaseTextView">
+        <item name="android:background">@color/transparentBlack</item>
+    </style>
+
+    <style name="BaseImageView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:adjustViewBounds">true</item>
+    </style>
 </resources>
