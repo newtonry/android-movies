@@ -6,9 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 
 import com.fadetoproductions.rvkn.flickster.adapters.MovieArrayAdapter;
+import com.fadetoproductions.rvkn.flickster.clients.MovieClient;
 import com.fadetoproductions.rvkn.flickster.models.Movie;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,9 +29,6 @@ public class MovieActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-//        requestWindowFeature(Window.FEATURE_NO_TITLE);
-
         setContentView(R.layout.activity_movie);
 
         swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
@@ -55,29 +51,28 @@ public class MovieActivity extends AppCompatActivity {
     }
 
     private void fetchAndSetMovies() {
-        String url = "https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed";
-        AsyncHttpClient client = new AsyncHttpClient();
-        client.get(url, new JsonHttpResponseHandler() {
+        MovieClient movieClient = new MovieClient();
+        movieClient.setMovieClientListener(new MovieClient.MovieClientListener() {
             @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+            public void onFetchAllMoviesSuccess(int statusCode, Header[] headers, JSONObject response) {
                 JSONArray movieJsonResults;
                 try {
-                    movieJsonResults =  response.getJSONArray("results");
+                    movieJsonResults = response.getJSONArray("results");
                     movies.addAll(Movie.fromJSONArray(movieJsonResults));
                     movieAdapter.notifyDataSetChanged();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 swipeContainer.setRefreshing(false);
-            }
 
+            }
             @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                super.onFailure(statusCode, headers, responseString, throwable);
+            public void onFetchAllMoviesFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 swipeContainer.setRefreshing(false);
             }
         });
 
+        movieClient.fetchAllMovies();
     }
 
 }
