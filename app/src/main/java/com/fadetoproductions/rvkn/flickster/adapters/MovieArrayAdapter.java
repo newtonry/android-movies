@@ -2,6 +2,7 @@ package com.fadetoproductions.rvkn.flickster.adapters;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +10,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.fadetoproductions.rvkn.flickster.MovieActivity;
 import com.fadetoproductions.rvkn.flickster.R;
+import com.fadetoproductions.rvkn.flickster.fragments.DetailsFragment;
 import com.fadetoproductions.rvkn.flickster.models.Movie;
 import com.squareup.picasso.Picasso;
 
@@ -55,7 +58,7 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Movie movie = getItem(position);
+        final Movie movie = getItem(position);
 
         ViewHolder viewHolder;
         if (convertView == null) {
@@ -90,8 +93,25 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
                     .into(viewHolder.ivImage);
         }
 
+
+        viewHolder.tvTitle.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showMovieFragment(movie);
+            }
+        });
+
+
         return convertView;
     }
+
+    private void showMovieFragment(Movie movie) {
+        MovieActivity context = (MovieActivity) getContext();
+        DetailsFragment detailsFragment = DetailsFragment.newInstance(movie);
+        FragmentManager fm = context.getSupportFragmentManager();
+        detailsFragment.show(fm, "details_fragment");
+    }
+
 
     private String selectImageBasedOnOrientationAndRating(Movie movie) {
         if (movie.isHighlyRated()) {

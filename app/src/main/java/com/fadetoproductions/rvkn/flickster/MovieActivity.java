@@ -30,6 +30,9 @@ public class MovieActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+//        requestWindowFeature(Window.FEATURE_NO_TITLE);
+
         setContentView(R.layout.activity_movie);
 
         swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
@@ -48,6 +51,7 @@ public class MovieActivity extends AppCompatActivity {
         });
 
         fetchAndSetMovies();
+
     }
 
     private void fetchAndSetMovies() {
